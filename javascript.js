@@ -50,14 +50,16 @@ const clearBtn = document.querySelector('.clear')
 const deleteBtn = document.querySelector('.delete')
 const atual = document.querySelector('.atual')
 const stored = document.querySelector('.stored')
+const equalKey = document.querySelector('.equal')
 atual.textContent = 0;
-
+stored.textContent = 0;
 
 
 // variables
 
 let storedNum = "";
 let currentNum = "";
+let secondNum = "";
 let result = "";
 let operator = "";
 
@@ -65,24 +67,32 @@ let operator = "";
 //update the display
 
 numberKeys.forEach((button)=> {
-    button.addEventListener('click', function (){
+    button.addEventListener('click', function(){
         currentNum += button.innerHTML;
         atual.textContent = currentNum;
     })
 })
 
-operations.forEach((button)=> {
-    button.addEventListener('click', function (){
-        storedNum = currentNum;
-        clickedOperator = button.innerHTML;
-        stored.textContent = storedNum + ' ' + clickedOperator;
+operations.forEach((button) =>{
+    button.addEventListener('click', function(){
+        if (storedNum !== null ){
+        secondNum = currentNum;
+        operator = button.innerHTML;
         currentNum = "";
+        atual.textContent = `${secondNum} ${operator}`;
+        }
+        else {
+            storedNum = currentNum;
+            operator = button.innerHTML;
+            currentNum = "";
+            atual.textContent = `${storedNum} ${operator}`
+        }
     })
 })
 
-clearBtn.addEventListener('click', function() {
-    storedNum = "";
-    currentNum = "";
-    atual.textContent = 0;
-    stored.textContent = "";
-})
+equalKey.addEventListener('click', function(){
+    result = operate(parseFloat(currentNum), parseFloat(secondNum), operator);
+    storedNum = result;
+    currentNum = storedNum;
+    stored.textContent = `${storedNum}`
+});
