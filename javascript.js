@@ -12,9 +12,7 @@ let num2 = b;
 }
 
 function subtract(a,b){
-let num1 = a;
-let num2 = b;
-    return num1 - num2;
+    return a -b;
 }
 
 function divide(a,b){
@@ -32,7 +30,7 @@ function operate(a,b, operator) {
         return add(a,b);
         break;
     case "-":
-        return subtract(a,b);
+        return subtract(b,a);
         break;
     case "*":
         return multiply(a,b);
@@ -59,9 +57,10 @@ stored.textContent = 0;
 
 let storedNum = "";
 let currentNum = "";
-let secondNum = "";
+let secondNum = parseFloat(0);
 let result = "";
 let operator = "";
+
 
 
 //update the display
@@ -75,24 +74,46 @@ numberKeys.forEach((button)=> {
 
 operations.forEach((button) =>{
     button.addEventListener('click', function(){
-        if (storedNum !== null ){
+        if(storedNum == 0){
         secondNum = currentNum;
-        operator = button.innerHTML;
         currentNum = "";
-        atual.textContent = `${secondNum} ${operator}`;
-        }
-        else {
-            storedNum = currentNum;
-            operator = button.innerHTML;
+        operator = button.innerHTML;
+        atual.textContent = `${storedNum} ${operator}`;
+        } else {
+            secondNum = storedNum;
             currentNum = "";
+            operator = button.innerHTML;
             atual.textContent = `${storedNum} ${operator}`
         }
+        // if (storedNum !== undefined ){
+        // secondNum = currentNum;
+        // operator = button.innerHTML;
+        // currentNum = "";
+        // atual.textContent = `${storedNum} ${operator}`;
+        // }
+        // else {
+
+        //     secondNum = storedNum;
+        //     operator = button.innerHTML;
+        //     currentNum = "";
+        //     atual.textContent = `${storedNum} ${operator}`
+        // }
     })
+})
+
+clearBtn.addEventListener('click', function(){
+    atual.textContent = 0;
+    stored.textContent = 0;
+    currentNum = "";
+    storedNum = "";
+    secondNum = "";
 })
 
 equalKey.addEventListener('click', function(){
     result = operate(parseFloat(currentNum), parseFloat(secondNum), operator);
-    storedNum = result;
-    currentNum = storedNum;
+    storedNum = parseFloat(result);
+    secondNum = result;
+    currentNum = parseFloat(currentNum);
     stored.textContent = `${storedNum}`
 });
+
