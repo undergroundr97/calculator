@@ -37,8 +37,8 @@ function operate(a,b, operator) {
         return multiply(a,b);
         break;
     case "/":
-        if(storedNum == 0){
-            atual.textContent = "ERROR! Can\'t divide by 0"
+        if(currentNum == 0){
+          alert('Can\'t divide by zero'), clear();
         }
         return divide(b,a);
         break;
@@ -79,11 +79,15 @@ numberKeys.forEach((button)=> {
 
 operations.forEach((button) =>{
     button.addEventListener('click', function(){
-          if(storedNum == 0){
+         if (result != Number && storedNum == NaN){
+            result = 0;
+            stored = 0;
+         }
+         else if (storedNum == 0){
         secondNum = currentNum;
         currentNum = "";
         operator = button.innerHTML;
-        atual.textContent = `${parseFloat(storedNum)} ${operator}`;
+        atual.textContent = `${parseFloat(secondNum)} ${operator}`;
        
         } else  {
             secondNum = storedNum;
@@ -108,13 +112,8 @@ operations.forEach((button) =>{
     })
 })
 
-clearBtn.addEventListener('click', function(){
-    atual.textContent = 0;
-    stored.textContent = 0;
-    currentNum = "";
-    storedNum = "";
-    secondNum = "";
-})
+clearBtn.addEventListener('click', clear);
+
 
 equalKey.addEventListener('click', getResult);
 
@@ -125,11 +124,20 @@ deleteBtn.addEventListener('click', function(){
 function getResult (){
     if (currentNum === ""){
         currentNum = 0;
-    }
+    } 
+     else {
     result = operate(parseFloat(currentNum), parseFloat(secondNum), operator);
     storedNum = parseFloat(result).toFixed(2);
     secondNum = secondNum;
     currentNum = parseFloat(currentNum);
     atual.textContent = `${parseFloat(result.toFixed(2))} ${operator}`
     stored.textContent = `${parseFloat(secondNum)} ${operator} ${currentNum} = ${parseFloat(storedNum)} `
+}}
+function clear(){
+    atual.textContent = 0;
+    stored.textContent = 0;
+    currentNum = 0;
+    storedNum = 0;
+    secondNum = 0;
+    result = 0;
 }
