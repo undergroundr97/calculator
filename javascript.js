@@ -49,7 +49,7 @@ function operate(a,b, operator) {
 const numberKeys = document.querySelectorAll('.number')
 const operations = document.querySelectorAll('.operation')
 const clearBtn = document.querySelector('.clear')
-const deleteBtn = document.querySelector('.delete')
+const deleteBtn = document.querySelector('.backspace')
 const atual = document.querySelector('.atual')
 const stored = document.querySelector('.stored')
 const equalKey = document.querySelector('.equal')
@@ -83,12 +83,13 @@ operations.forEach((button) =>{
         secondNum = currentNum;
         currentNum = "";
         operator = button.innerHTML;
-        atual.textContent = `${storedNum} ${operator}`;
+        atual.textContent = `${parseFloat(storedNum)} ${operator}`;
+       
         } else  {
             secondNum = storedNum;
             currentNum = "";
             operator = button.innerHTML;
-            atual.textContent = `${storedNum} ${operator}`
+            atual.textContent = `${parseFloat(storedNum)} ${operator}`
         }
         
         // if (storedNum !== undefined ){
@@ -117,12 +118,18 @@ clearBtn.addEventListener('click', function(){
 
 equalKey.addEventListener('click', getResult);
 
+deleteBtn.addEventListener('click', function(){
+    atual.textContent
+})
 
 function getResult (){
+    if (currentNum === ""){
+        currentNum = 0;
+    }
     result = operate(parseFloat(currentNum), parseFloat(secondNum), operator);
-    storedNum = parseFloat(result);
+    storedNum = parseFloat(result).toFixed(2);
     secondNum = secondNum;
     currentNum = parseFloat(currentNum);
-    atual.textContent = `${result} ${operator}`
-    stored.textContent = `${parseFloat(secondNum)} ${operator} ${currentNum} = ${storedNum} `
+    atual.textContent = `${parseFloat(result.toFixed(2))} ${operator}`
+    stored.textContent = `${parseFloat(secondNum)} ${operator} ${currentNum} = ${parseFloat(storedNum)} `
 }
