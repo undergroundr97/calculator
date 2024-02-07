@@ -19,7 +19,7 @@ function divide(a,b){
 let num1 = a;
 let num2 = b;
 if (num1 === 0 || num2 === 0){
-    return console.log('Cannot Divide by 0');
+    console.log('Can\'t divide by zero')
 }
     return num1/num2;
 }
@@ -30,13 +30,17 @@ function operate(a,b, operator) {
         return add(a,b);
         break;
     case "-":
+        
         return subtract(b,a);
         break;
     case "*":
         return multiply(a,b);
         break;
     case "/":
-        return divide(a,b);
+        if(storedNum == 0){
+            atual.textContent = "ERROR! Can\'t divide by 0"
+        }
+        return divide(b,a);
         break;
  }   
 };
@@ -55,7 +59,7 @@ stored.textContent = 0;
 
 // variables
 
-let storedNum = "";
+let storedNum = parseFloat(0);
 let currentNum = "";
 let secondNum = parseFloat(0);
 let result = "";
@@ -68,23 +72,25 @@ let operator = "";
 numberKeys.forEach((button)=> {
     button.addEventListener('click', function(){
         currentNum += button.innerHTML;
-        atual.textContent = currentNum;
+        atual.textContent = parseFloat(currentNum);
+        
     })
 })
 
 operations.forEach((button) =>{
     button.addEventListener('click', function(){
-        if(storedNum == 0){
+          if(storedNum == 0){
         secondNum = currentNum;
         currentNum = "";
         operator = button.innerHTML;
         atual.textContent = `${storedNum} ${operator}`;
-        } else {
+        } else  {
             secondNum = storedNum;
             currentNum = "";
             operator = button.innerHTML;
             atual.textContent = `${storedNum} ${operator}`
         }
+        
         // if (storedNum !== undefined ){
         // secondNum = currentNum;
         // operator = button.innerHTML;
@@ -109,11 +115,14 @@ clearBtn.addEventListener('click', function(){
     secondNum = "";
 })
 
-equalKey.addEventListener('click', function(){
+equalKey.addEventListener('click', getResult);
+
+
+function getResult (){
     result = operate(parseFloat(currentNum), parseFloat(secondNum), operator);
     storedNum = parseFloat(result);
-    secondNum = result;
+    secondNum = secondNum;
     currentNum = parseFloat(currentNum);
-    stored.textContent = `${storedNum}`
-});
-
+    atual.textContent = `${result} ${operator}`
+    stored.textContent = `${parseFloat(secondNum)} ${operator} ${currentNum} = ${storedNum} `
+}
