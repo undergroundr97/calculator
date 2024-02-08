@@ -69,54 +69,49 @@ let operator = "";
 
 numberKeys.forEach((button)=> {
     button.addEventListener('click', function(){
-        if (result === Infinity){
+        if (result === Infinity || result === -Infinity){
             clear();
         }
         currentNum += button.innerHTML;
-        atual.textContent = parseFloat(currentNum);
+        atual.textContent = `${parseFloat(currentNum)}`;
         
     })
 })
 
 operations.forEach((button) =>{
     button.addEventListener('click', function(){
-         if (result != Number && storedNum == NaN){
-            result = 0;
-            stored = 0;
-         }
-         else if (storedNum == 0){
+         
+         if (storedNum == 0){
+        storedNum = currentNum;
         secondNum = currentNum;
         currentNum = "";
         operator = button.innerHTML;
         atual.textContent = `${parseFloat(secondNum)} ${operator}`;
+         }
+        else if (currentNum == '+' || '-' || '*' || '/'){
+            currentNum = "";
+            secondNum = storedNum;
+            operator = button.innerHTML;
+            atual.textContent = `${parseFloat(secondNum)} ${operator} ${currentNum}`
+         }
        
-        } else  {
+        else  {
             secondNum = storedNum;
             currentNum = "";
             operator = button.innerHTML;
             atual.textContent = `${parseFloat(storedNum)} ${operator}`
         }
         
-        // if (storedNum !== undefined ){
-        // secondNum = currentNum;
-        // operator = button.innerHTML;
-        // currentNum = "";
-        // atual.textContent = `${storedNum} ${operator}`;
-        // }
-        // else {
-
-        //     secondNum = storedNum;
-        //     operator = button.innerHTML;
-        //     currentNum = "";
-        //     atual.textContent = `${storedNum} ${operator}`
-        // }
     })
 })
 
 
 clearBtn.addEventListener('click', clear);
 equalKey.addEventListener('click', getResult);
-
+commaBtn.addEventListener('click', function(){
+    currentNum += commaBtn.innerHTML;
+    atual.textContent = `${parseFloat(currentNum)}`
+})
 deleteBtn.addEventListener('click', function(){
     atual.textContent
 })
@@ -132,8 +127,8 @@ function getResult (){
      else {
     result = operate(parseFloat(currentNum), parseFloat(secondNum), operator);
     storedNum = parseFloat(result).toFixed(2);
+    currentNum = currentNum;
     secondNum = secondNum;
-    currentNum = parseFloat(currentNum);
     atual.textContent = `${parseFloat(result.toFixed(2))} ${operator}`
     stored.textContent = `${parseFloat(secondNum)} ${operator} ${currentNum} = ${parseFloat(storedNum)} `
 }}
