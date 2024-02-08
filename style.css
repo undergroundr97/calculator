@@ -65,7 +65,8 @@ body {
 }
 .number, 
 .operation, 
-.equal {
+.equal,
+.comma {
   width: 70px;
   height: 60px;
   box-sizing: border-box;

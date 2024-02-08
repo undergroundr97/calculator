@@ -19,7 +19,7 @@ function divide(a,b){
 let num1 = a;
 let num2 = b;
 if (num1 === 0 || num2 === 0){
-    console.log('Can\'t divide by zero')
+    alert('Cannot Divide by ZERO'), clear;
 }
     return num1/num2;
 }
@@ -37,9 +37,6 @@ function operate(a,b, operator) {
         return multiply(a,b);
         break;
     case "/":
-        if(currentNum == 0){
-          alert('Can\'t divide by zero'), clear();
-        }
         return divide(b,a);
         break;
  }   
@@ -53,6 +50,7 @@ const deleteBtn = document.querySelector('.backspace')
 const atual = document.querySelector('.atual')
 const stored = document.querySelector('.stored')
 const equalKey = document.querySelector('.equal')
+const commaBtn = document.querySelector('.comma')
 atual.textContent = 0;
 stored.textContent = 0;
 
@@ -71,6 +69,9 @@ let operator = "";
 
 numberKeys.forEach((button)=> {
     button.addEventListener('click', function(){
+        if (result === Infinity){
+            clear();
+        }
         currentNum += button.innerHTML;
         atual.textContent = parseFloat(currentNum);
         
@@ -112,17 +113,20 @@ operations.forEach((button) =>{
     })
 })
 
+
 clearBtn.addEventListener('click', clear);
-
-
 equalKey.addEventListener('click', getResult);
 
 deleteBtn.addEventListener('click', function(){
     atual.textContent
 })
 
+//function result, reset input if divided by zero
 function getResult (){
-    if (currentNum === ""){
+    if(currentNum === "" || currentNum === 0 && operator === '/' ){
+        alert('Cannot Divide by ZERO'), clear();
+    }
+    else if (currentNum === ""){
         currentNum = 0;
     } 
      else {
@@ -133,6 +137,8 @@ function getResult (){
     atual.textContent = `${parseFloat(result.toFixed(2))} ${operator}`
     stored.textContent = `${parseFloat(secondNum)} ${operator} ${currentNum} = ${parseFloat(storedNum)} `
 }}
+
+//reset inputs
 function clear(){
     atual.textContent = 0;
     stored.textContent = 0;
